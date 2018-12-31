@@ -91,7 +91,7 @@ FILL_ORDER_DOUBLE_REVERSE_POSITION    =   [
     3046586,
 ]
 
-tester.STARTGAS = long(6.7 * 10**6)
+tester.STARTGAS = 6.7 * 10**6
 
 @mark.parametrize('numOutcomes', range(2,9))
 def test_order_creation_best_case(numOutcomes, localFixture, markets):

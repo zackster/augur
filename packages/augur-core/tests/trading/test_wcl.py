@@ -6,7 +6,7 @@ from pytest import raises, mark
 from utils import longTo32Bytes, fix, AssertLog
 from constants import BID, ASK, YES, NO
 
-tester.STARTGAS = long(6.7 * 10**6)
+tester.STARTGAS = 6.7 * 10**6
 
 
 def test_create_ask_with_shares_fill_with_shares(contractsFixture, cash, market):
@@ -44,8 +44,8 @@ def test_create_ask_with_shares_fill_with_shares(contractsFixture, cash, market)
     assert amountRemaining == 0
     assert cash.balanceOf(tester.a1) == 0
     assert cash.balanceOf(tester.a2) == 0
-    assert contractsFixture.chain.head_state.get_balance(tester.a1) == initialMakerETH + fix('12', '6000') - long(creatorFee)
-    assert contractsFixture.chain.head_state.get_balance(tester.a2) == initialFillerETH + fix('12', '4000') - long(fillerFee)
+    assert contractsFixture.chain.head_state.get_balance(tester.a1) == initialMakerETH + fix('12', '6000') - creatorFee
+    assert contractsFixture.chain.head_state.get_balance(tester.a2) == initialFillerETH + fix('12', '4000') - fillerFee
     assert yesShareToken.balanceOf(tester.a1) == 0
     assert yesShareToken.balanceOf(tester.a2) == fix(12)
     assert noShareToken.balanceOf(tester.a1) == fix(12)
@@ -193,12 +193,12 @@ def test_create_bid_with_shares_fill_with_shares(contractsFixture, cash, market,
 
     creatorFee = completeSetFees * 0.4
     fillerFee = completeSetFees * 0.6
-    creatorPayment = fix('12', '4000') - long(creatorFee)
-    fillerPayment = fix('12', '6000') - long(fillerFee)
+    creatorPayment = fix('12', '4000') - creatorFee
+    fillerPayment = fix('12', '6000') - fillerFee
     assert cash.balanceOf(tester.a1) == 0
     assert cash.balanceOf(tester.a2) == 0
-    assert contractsFixture.chain.head_state.get_balance(tester.a1) == initialMakerETH + long(creatorPayment)
-    assert contractsFixture.chain.head_state.get_balance(tester.a2) == initialFillerETH + long(fillerPayment)
+    assert contractsFixture.chain.head_state.get_balance(tester.a1) == initialMakerETH + creatorPayment
+    assert contractsFixture.chain.head_state.get_balance(tester.a2) == initialFillerETH + fillerPayment
     assert yesShareToken.balanceOf(tester.a1) == fix(12)
     assert yesShareToken.balanceOf(tester.a2) == 0
     assert noShareToken.balanceOf(tester.a1) == 0

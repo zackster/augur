@@ -7,7 +7,7 @@ from utils import bytesToLong, longTo32Bytes, longToHexString, bytesToHexString,
 from uuid import uuid4
 from constants import BID, ASK, YES, NO
 
-tester.STARTGAS = long(6.7 * 10**6)
+tester.STARTGAS = 6.7 * 10**6
 
 ATTOSHARES = 0
 DISPLAY_PRICE = 1
@@ -112,7 +112,7 @@ def test_publicCreateOrder_bid2(contractsFixture, cash, market, universe):
     assert orders.getOrderMoneyEscrowed(orderID) == fix(1, 4000)
     assert orders.getOrderSharesEscrowed(orderID) == 0
     assert cash.balanceOf(tester.a1) == 0
-    assert contractsFixture.chain.head_state.get_balance(tester.a1) == creatorInitialETH - long(4000 * 10**18)
+    assert contractsFixture.chain.head_state.get_balance(tester.a1) == creatorInitialETH - 4000 * 10**18
     assert cash.balanceOf(market.address) - marketInitialCash == 4000 * 10**18
 
 def test_createOrder_failure(contractsFixture, universe, cash, market):

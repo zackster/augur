@@ -140,7 +140,7 @@ class ContractsFixture:
         absoluteFilePath = resolveRelativePath(relativeFilePath)
         filename = path.basename(relativeFilePath)
         contractName = path.splitext(filename)[0]
-        print absoluteFilePath
+        print(absoluteFilePath)
         compilerParameter = {
             'language': 'Solidity',
             'sources': {
@@ -196,7 +196,7 @@ class ContractsFixture:
 
     def __init__(self):
         tester.GASPRICE = 0
-        tester.STARTGAS = long(6.7 * 10**7)
+        tester.STARTGAS = 6.7 * 10**7
         config_metropolis['GASLIMIT_ADJMAX_FACTOR'] = .000000000001
         config_metropolis['GENESIS_GAS_LIMIT'] = 2**60
         config_metropolis['MIN_GAS_LIMIT'] = 2**60
@@ -444,7 +444,7 @@ class ContractsFixture:
     def createReasonableYesNoMarket(self, universe, sender=tester.k0, topic="", description="description", extraInfo="", validityBond=0):
         return self.createYesNoMarket(
             universe = universe,
-            endTime = long(self.contracts["Time"].getTimestamp() + timedelta(days=1).total_seconds()),
+            endTime = self.contracts["Time"].getTimestamp() + timedelta(days=1).total_seconds(),
             feePerEthInWei = 10**16,
             designatedReporterAddress = tester.a0,
             sender = sender,
@@ -457,7 +457,7 @@ class ContractsFixture:
         return self.createCategoricalMarket(
             universe = universe,
             numOutcomes = numOutcomes,
-            endTime = long(self.contracts["Time"].getTimestamp() + timedelta(days=1).total_seconds()),
+            endTime = self.contracts["Time"].getTimestamp() + timedelta(days=1).total_seconds(),
             feePerEthInWei = 10**16,
             designatedReporterAddress = tester.a0,
             sender = sender)
@@ -465,7 +465,7 @@ class ContractsFixture:
     def createReasonableScalarMarket(self, universe, maxPrice, minPrice, numTicks, sender=tester.k0):
         return self.createScalarMarket(
             universe = universe,
-            endTime = long(self.contracts["Time"].getTimestamp() + timedelta(days=1).total_seconds()),
+            endTime = self.contracts["Time"].getTimestamp() + timedelta(days=1).total_seconds(),
             feePerEthInWei = 10**16,
             maxPrice= maxPrice,
             minPrice= minPrice,
@@ -520,7 +520,7 @@ def kitchenSinkSnapshot(fixture, augurInitializedSnapshot):
     yesNoMarket = fixture.createReasonableYesNoMarket(universe)
     startingGas = fixture.chain.head_state.gas_used
     categoricalMarket = fixture.createReasonableCategoricalMarket(universe, 3)
-    print 'Gas Used: %s' % (fixture.chain.head_state.gas_used - startingGas)
+    print('Gas Used: %s' % (fixture.chain.head_state.gas_used - startingGas))
     scalarMarket = fixture.createReasonableScalarMarket(universe, 30, -10, 400000)
     fixture.uploadAndAddToAugur("solidity_test_helpers/Constants.sol")
     snapshot = fixture.createSnapshot()

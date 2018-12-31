@@ -28,7 +28,7 @@ def test_basic_token_transfer(localFixture, chain, mockToken):
 def test_basic_token_emit(localFixture, mockToken):
     assert mockToken.mint(tester.a1, 101)
     transferLog = {
-        'value': 101L
+        'value': 101
     }
     with AssertLog(localFixture, "Transfer", transferLog, contract=mockToken):
         assert mockToken.callInternalTransfer(tester.a1, tester.a2, 101)

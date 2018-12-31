@@ -79,7 +79,7 @@ def test_redeem_shares_in_yesNo_market(kitchenSinkFixture, universe, cash, marke
     expectedReporterFees = expectedValue / universe.getOrCacheReportingFeeDivisor()
     expectedMarketCreatorFees = expectedValue / market.getMarketCreatorSettlementFeeDivisor()
     expectedSettlementFees = expectedReporterFees + expectedMarketCreatorFees
-    expectedPayout = long(expectedValue - expectedSettlementFees)
+    expectedPayout = expectedValue - expectedSettlementFees
 
     assert universe.getOpenInterestInAttoEth() == 0
 
@@ -128,7 +128,7 @@ def test_redeem_shares_in_categorical_market(kitchenSinkFixture, universe, cash,
     numTicks = market.getNumTicks()
     expectedValue = numTicks
     expectedSettlementFees = expectedValue * 0.02
-    expectedPayout = long(expectedValue - expectedSettlementFees)
+    expectedPayout = expectedValue - expectedSettlementFees
 
     assert universe.getOpenInterestInAttoEth() == 0
 
@@ -168,7 +168,7 @@ def test_redeem_shares_in_scalar_market(kitchenSinkFixture, universe, cash, scal
     noShareToken = kitchenSinkFixture.applySignature('ShareToken', market.getShareToken(NO))
     expectedValue = 1 * market.getNumTicks()
     expectedSettlementFees = expectedValue * 0.02
-    expectedPayout = long(expectedValue - expectedSettlementFees)
+    expectedPayout = expectedValue - expectedSettlementFees
 
     assert universe.getOpenInterestInAttoEth() == 0
 

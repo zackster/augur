@@ -5,11 +5,11 @@ from decimal import Decimal
 from struct import pack
 
 garbageAddress = '0xdefec8eddefec8eddefec8eddefec8eddefec8ed'
-twentyZeros = str(pack(">l", 0).rjust(20, '\x00'))
-thirtyTwoZeros = str(pack(">l", 0).rjust(32, '\x00'))
+twentyZeros = str(pack(">l", 0).rjust(20, b'\x00'))
+thirtyTwoZeros = str(pack(">l", 0).rjust(32, b'\x00'))
 
 def fix(n, m = 1):
-    return long(Decimal(n) * Decimal(m) * 10**18)
+    return Decimal(n) * Decimal(m) * 10**18
 
 def unfix(n):
     return n // 10**18
@@ -18,14 +18,14 @@ def stringToBytes(value):
     return value.ljust(32, '\x00')
 
 def longTo32Bytes(value):
-    return pack(">l", value).rjust(32, '\x00')
+    return pack(">l", value).rjust(32, b'\x00')
 
 def longToHexString(value, leftPad=40):
     # convert the value to a hex string, strip off the `0x`, strip off any trailing `L`, pad with zeros, prefix with `0x`
     return '0x' + hex(value)[2:].rstrip('L').zfill(leftPad)
 
 def bytesToLong(value):
-    return long(value.encode('hex'), 16)
+    return int.from_bytes(value, byteorder='little')
 
 def bytesToHexString(value):
     return longToHexString(bytesToLong(value))
@@ -92,9 +92,9 @@ class PrintGasUsed():
             raise args[1]
         gasUsed = self.fixture.chain.head_state.gas_used - self.startingGas
         if self.originalGas:
-            print "GAS USED WITH %s : %i. ORIGINAL: %i DELTA: %i" % (self.action, gasUsed, self.originalGas, self.originalGas - gasUsed)
+            print( "GAS USED WITH %s : %i. ORIGINAL: %i DELTA: %i" % (self.action, gasUsed, self.originalGas, self.originalGas - gasUsed) )
         else:
-            print "GAS USED WITH %s : %i" % (self.action, gasUsed)
+            print("GAS USED WITH %s : %i" % (self.action, gasUsed))
 
 class AssertLog():
 
