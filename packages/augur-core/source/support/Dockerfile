@@ -9,7 +9,7 @@ FROM augurproject/python2-and-3:latest
 ARG SOLC_VERSION=v0.4.24
 
 RUN curl -sL https://deb.nodesource.com/setup_10.x | bash - \
-	&& apt-get install -y nodejs
+	&& apt-get install -y nodejs libgmp-dev
 
 RUN wget --quiet --output-document /usr/local/bin/solc https://github.com/ethereum/solidity/releases/download/${SOLC_VERSION}/solc-static-linux \
 	&& chmod a+x /usr/local/bin/solc
@@ -17,9 +17,9 @@ RUN wget --quiet --output-document /usr/local/bin/solc https://github.com/ethere
 COPY requirements.txt /app/requirements.txt
 
 WORKDIR /app
-RUN /usr/local/bin/pip2 install --upgrade pip setuptools \
-	&& /usr/local/bin/pip2 install --upgrade pip-tools \
-	&& /usr/local/bin/pip2 install -r requirements.txt
+RUN /usr/local/bin/pip3 install --upgrade pip setuptools \
+	&& /usr/local/bin/pip3 install --upgrade pip-tools pytest \
+	&& /usr/local/bin/pip3 install -r requirements.txt
 
 # Install basics of the application
 COPY .soliumrc.json /app/.soliumrc.json
