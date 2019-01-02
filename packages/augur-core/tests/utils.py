@@ -25,7 +25,7 @@ def longToHexString(value, leftPad=40):
     return '0x' + hex(value)[2:].rstrip('L').zfill(leftPad)
 
 def bytesToLong(value):
-    return int.from_bytes(value, byteorder='little')
+    return int.from_bytes(value, byteorder='big')
 
 def bytesToHexString(value):
     return longToHexString(bytesToLong(value))
